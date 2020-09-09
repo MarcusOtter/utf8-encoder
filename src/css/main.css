@@ -1,5 +1,4 @@
-header
-{
+header {
     text-align: center
 }
 
@@ -7,8 +6,32 @@ header .author {
     margin-bottom: 2.5rem;
 }
 
-.encode-decode-toggle {
+.settings {
     text-align: center;
+}
+
+.encode-decode-toggle button:nth-child(1) {
+    border-radius: .4rem 0 0 .4rem;
+    border-right: 0;
+}
+
+.encode-decode-toggle button:nth-child(2) {
+    border-radius: 0 .4rem .4rem 0;
+    border-left: 0;
+}
+
+.numeral-system-select button:nth-child(1) {
+    border-radius: .4rem 0 0 .4rem;
+}
+
+.numeral-system-select button:nth-child(2) {
+    border-radius: 0;
+    border-right: 0;
+    border-left: 0;
+}
+
+.numeral-system-select button:nth-child(3) {
+    border-radius: 0 .4rem .4rem 0;
 }
 
 main .button {
@@ -22,22 +45,70 @@ main .button:focus {
     background-color: #9b4dca
 }
 
-.numeral-system-select
-{
+.numeral-system-select {
     margin-bottom: 1.5rem;
 }
 
-.numeral-system-select button:nth-child(1)
-{
+.numeral-system-select button:nth-child(1) {
     border-radius: .4rem 0 0 .4rem;
 }
-.numeral-system-select button:nth-child(2)
-{
+
+.numeral-system-select button:nth-child(2) {
     border-radius: 0;
     border-right: 0;
     border-left: 0;
 }
-.numeral-system-select button:nth-child(3)
-{
+
+.numeral-system-select button:nth-child(3) {
     border-radius: 0 .4rem .4rem 0;
+}
+
+.offset-input {
+    text-align: center;
+}
+
+.offset-input input[type="range"] {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+
+.offset-input input[inputmode="numeric"] {
+    margin-top: 1rem;
+    width: 15em;
+    text-align: center;
+}
+
+.input-output-box {
+    display: flex;
+    justify-content: space-around;
+}
+
+.input-output-box .input {
+    width: 50%;
+    margin-right: 2rem;
+}
+
+.input-output-box .output {
+    width: 50%;
+    margin-left: 2rem;
+    text-align: right;
+}
+
+@media only screen and (max-width: 1000px) {
+    .input-output-box {
+        flex-direction: column;
+        align-items: center;
+    }
+ 
+    .input-output-box .input {
+        width: 80%;
+        margin: 0;
+    }
+    
+    .input-output-box .output {
+        width: 80%;
+        text-align: left;
+        margin: 0;
+    }
 }

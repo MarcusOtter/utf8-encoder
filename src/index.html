@@ -18,8 +18,8 @@
         <header>
             <h1>UTF-8 encoder/decoder</h1>
             <p>
-                Encode UTF-8 characters into binary, hexadecimal, or decimal numbers with an optional offset.
-                You can also decode a message in binary, hexadecimal or decimal into UTF-8 characters, with an optional offset.
+                Encode UTF-8 characters into binary, hexadecimal, or decimal numbers with an optional 8-bit signed integer offset.
+                You can also decode an encoded message into UTF-8 characters, with an optional 8-bit signed integer offset.
             </p>
             <p>
                 Source code on
@@ -30,38 +30,33 @@
                 <em>Marcus Otterström 2020-09-09</em>
             </p>
         </header>
-        <div class="encode-decode-toggle">
-            <button class="button" id="js-encode">Encode</button>
-            <button class="button button-outline" id="js-decode">Decode</button>
+        <section class="settings">
+            <div class="encode-decode-toggle">
+                <button class="button" id="js-encode">Encode</button><button class="button button-outline" id="js-decode">Decode</button>
+            </div>
+            <div class="numeral-system-select">
+                <button id="js-binary" class="button">BIN</button><button id="js-hexadecimal" class="button button-outline">HEX</button><button id="js-decimal" class="button button-outline">DEC</button>
+            </div>
+            <label for="js-offset-input-number">Offset</label>
+            <div class="offset-input">
+                <input id="js-offset-input-range" type="range" min="-128" max="127" step="1" value="0">
+                <input id="js-offset-input-number" type="text" inputmode="numeric" min="-128" max="127" value="0">
+            </div>
+        </section>
+        <div class="input-output-box">
+            <section class="input" id="js-encode-section">
+                <h2>Encode</h2>
+                <textarea placeholder="My secret UTF-8 characters..." id="encode-input"></textarea>
+            </section>
+            <section class="input" id="js-decode-section" hidden>
+                <h2>Decode</h2>
+                <textarea placeholder="0001 1101 0001 1110" id="encode-input"></textarea>
+            </section>
+            <section class="output">
+                <h2>Output</h2>
+                <textarea readonly></textarea>
+            </section>
         </div>
-        <section id="js-encode-section">
-            <h2>Encode</h2>
-            <form>
-                <fieldset>
-                    <label for="encode-input">UTF-8 characters to encode</label>
-                    <textarea placeholder="My secret message..." id="encode-input"></textarea>
-
-                    <label>Output</label>
-                    <div class="numeral-system-select">
-                        <button class="button">BIN</button><button class="button button-outline">HEX</button><button class="button button-outline">DEC</button>
-                    </div>
-
-
-                    <label for="">Offset</label>
-                    <input type=range>
-                </fieldset>
-            </form>
-            
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci cum fugiat quia. Sunt ea nisi nostrum minima quo aliquam blanditiis obcaecati quia exercitationem, itaque eaque quae fuga tempore odit modi eius nobis consectetur molestias sequi. Iste ad a porro quidem quas enim distinctio dolorum praesentium, cum voluptas quo at voluptatem obcaecati natus, consectetur repellat optio laborum amet quos nemo ex, accusantium voluptate ipsum. Repellat nisi cum autem pariatur asperiores vitae itaque velit consequatur quos tempora, doloribus culpa dolore facilis blanditiis deserunt est nobis, exercitationem debitis et recusandae doloremque. Mollitia, quam. Obcaecati neque inventore illo facere quisquam sit sunt itaque quod eius amet ratione placeat voluptatum nulla voluptas ducimus autem voluptates, suscipit eaque corrupti minus cum fugiat perspiciatis ex! Corrupti fuga illo odit ex accusamus! Tempore adipisci assumenda natus, esse atque, eos labore, quae pariatur nisi inventore corporis nostrum debitis ipsa consequuntur id tempora at omnis. Minus minima doloremque excepturi eligendi culpa labore temporibus maiores ducimus repellat qui fugit, eius, quae sunt, assumenda praesentium necessitatibus impedit saepe debitis consequuntur beatae ea corporis esse aliquam. Reiciendis dolor amet cum tempore asperiores modi numquam nam sint odit ducimus accusamus fugit, labore, ipsum explicabo! Porro doloremque, illum mollitia reprehenderit tempore sunt corrupti eveniet. Enim.
-            </p>
-        </section>
-        <section id="js-decode-section" hidden>
-            <h2>Decode</h2>
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus dignissimos a facere quo quasi quod quas sapiente atque cumque distinctio at doloremque quos voluptatem, explicabo quaerat est nostrum animi deleniti laborum corporis consectetur impedit? Nemo porro, nam necessitatibus magnam nihil sequi. Nam ab voluptatibus maiores tenetur atque facilis, nihil optio.
-            </p>
-        </section>
     </main>
 </body>
 </html>
