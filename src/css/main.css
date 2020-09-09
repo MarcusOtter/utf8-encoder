@@ -3,22 +3,41 @@ header
     text-align: center
 }
 
-header .source-code
-{
-    margin-bottom: 0;
+header .author {
+    margin-bottom: 2.5rem;
 }
 
 .encode-decode-toggle {
     text-align: center;
 }
 
-.encode-decode-toggle button {
+main .button {
     transition: background-color;
     transition-duration: 0.2s;
     transition-timing-function: ease-in-out;
 }
 
-.encode-decode-toggle button:hover,
-.encode-decode-toggle button:focus {
+main .button:hover,
+main .button:focus {
     background-color: #9b4dca
+}
+
+.numeral-system-select
+{
+    margin-bottom: 1.5rem;
+}
+
+.numeral-system-select button:nth-child(1)
+{
+    border-radius: .4rem 0 0 .4rem;
+}
+.numeral-system-select button:nth-child(2)
+{
+    border-radius: 0;
+    border-right: 0;
+    border-left: 0;
+}
+.numeral-system-select button:nth-child(3)
+{
+    border-radius: 0 .4rem .4rem 0;
 }

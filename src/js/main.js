@@ -22,3 +22,4 @@ function setIsEncoding(newValue) {
 
 encodeButton.onclick = () => setIsEncoding(true);
 decodeButton.onclick = () => setIsEncoding(false);
+
