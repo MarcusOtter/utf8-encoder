@@ -1,0 +1,24 @@
+header
+{
+    text-align: center
+}
+
+header .source-code
+{
+    margin-bottom: 0;
+}
+
+.encode-decode-toggle {
+    text-align: center;
+}
+
+.encode-decode-toggle button {
+    transition: background-color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+.encode-decode-toggle button:hover,
+.encode-decode-toggle button:focus {
+    background-color: #9b4dca
+}

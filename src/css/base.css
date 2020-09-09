@@ -1,0 +1,10 @@
+main {
+    max-width: 70ch;
+    padding: 2ch;
+    margin: auto;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333333;
+}
