@@ -73,7 +73,7 @@ main .button:focus {
     width: 50%;
 }
 
-.offset-input input[inputmode="numeric"] {
+.offset-input input[type="text"] {
     margin-top: 1rem;
     width: 15em;
     text-align: center;
