@@ -1,9 +1,14 @@
+// ====================================================================================== //
+// Copyright (C) 2020  Marcus Otterström
+// Read the license at https://github.com/MarcusOtter/utf8-encoder/blob/main/LICENSE.txt
+// ====================================================================================== //
+
 // This is not a pretty file
 // Javascript is not pretty
 // Imagine having to use regex to remove spaces from a string
 // Imagine having to manually convert numbers to other numeral systems because they're signed
-// I have so much duplicated, redundant code
-// Should've made this in ASP.NET :(
+// I have so much duplicated, redundant code, it all needs to be heavily refactored
+// Should've made this with blazor :(
 // Thank you
 
 const encodeButton = document.getElementById("js-encode");

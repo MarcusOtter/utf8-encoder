@@ -1,3 +1,8 @@
+/* ====================================================================================== //
+// Copyright (C) 2020  Marcus Otterström
+// Read the license at https://github.com/MarcusOtter/utf8-encoder/blob/main/LICENSE.txt
+// ====================================================================================== */
+
 header {
     text-align: center
 }
@@ -97,6 +102,11 @@ main .button:focus {
 
 .input-output-box textarea {
     height: auto;
+}
+
+.license {
+    margin-top: 20em;
+    font-size: 1.5rem;
 }
 
 @media only screen and (max-width: 1000px) {

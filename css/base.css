@@ -1,3 +1,8 @@
+/* ====================================================================================== //
+// Copyright (C) 2020  Marcus Otterström
+// Read the license at https://github.com/MarcusOtter/utf8-encoder/blob/main/LICENSE.txt
+// ====================================================================================== */
+
 main {
     max-width: 100ch;
     padding: 2ch;
@@ -7,4 +12,9 @@ main {
 body {
     background-color: #f5f5f5;
     color: #333333;
+}
+
+hr {
+    color: #333333;
+    border-top-color: #333333;
 }
