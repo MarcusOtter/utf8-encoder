@@ -2,8 +2,9 @@
 // Javascript is not pretty
 // Imagine having to use regex to remove spaces from a string
 // Imagine having to manually convert numbers to other numeral systems because they're signed
+// I have so much duplicated, redundant code
 // Should've made this in ASP.NET :(
-// Thank you for listening
+// Thank you
 
 const encodeButton = document.getElementById("js-encode");
 const decodeButton = document.getElementById("js-decode");
@@ -24,7 +25,7 @@ const outputField = document.getElementById("js-output");
 
 const buttonNotFilledClassName = "button-outline";
 
-let isEncoding = true;
+let isEncoding = false;
 let currentBase = 2;
 let currentOffsetDecimal = 0;
 
@@ -37,7 +38,20 @@ function setIsEncoding(shouldEncode) {
     encodeSection.hidden = !shouldEncode;
     decodeSection.hidden =  shouldEncode;
 
+    clearInputOutput();
     isEncoding = shouldEncode;
+    
+    setPlaceholderText(isEncoding, currentBase);
+}
+
+function setPlaceholderText(isEncoding, base) {
+    if (isEncoding) {
+        encodeInput.placeholder = "Example...";
+        outputField.placeholder = encode(base, encodeInput.placeholder, currentOffsetDecimal);
+    } else {
+        outputField.placeholder = "Example...";
+        decodeInput.placeholder = encode(base, outputField.placeholder, currentOffsetDecimal * -1);
+    }
 }
 
 function setBase(newBase) {
@@ -45,12 +59,32 @@ function setBase(newBase) {
     hexadecimalButton.classList.toggle(buttonNotFilledClassName, newBase !== 16);
     decimalButton    .classList.toggle(buttonNotFilledClassName, newBase !== 10);
     
-    currentBase = newBase;
+    let fieldValue;
+    let stringsToConvert;
+    if (isEncoding) {
+        fieldValue = outputField.value.trim();
+        stringsToConvert = fieldValue.split(" ");
+    } else {
+        fieldValue = decodeInput.value.trim();
+        stringsToConvert = fieldValue.split(" ");
+    }
+
+    if (fieldValue !== null && fieldValue !== "" && stringsToConvert !== null && stringsToConvert.length !== 0) {
+        let decimalNumbers = convertNumberStringsToDecimal(currentBase, stringsToConvert);
+        let convertedStrings = decimalNumbers.map((num) => decimalToStringWithNewBase(num, newBase));
     
-    updateOffsetValue(currentOffsetDecimal, 10, currentBase);
+        if (isEncoding) {
+            outputField.value = convertedStrings.join(" ");
+        } else { 
+            decodeInput.value = convertedStrings.join(" ");
+        }
+    }
+
+    currentBase = newBase;
+    updateOffsetValue(currentOffsetDecimal, 10, newBase);
 }
 
-// 8-bit signed integer
+// Signed byte
 function decimalToStringWithNewBase(decimalValue, newBase) {
     // If negative number, start counting backwards from 255 (2-complement)
     if (newBase !== 10 && decimalValue < 0) {
@@ -60,7 +94,7 @@ function decimalToStringWithNewBase(decimalValue, newBase) {
     output = parseInt(decimalValue, 10).toString(newBase);
 
     if (newBase === 2) {
-        output = formatBinary(output); // This does too many spaces in the decoded thing
+        output = formatBinary(output, 8);
     }
     else if (newBase === 16) {
         output = formatHexadecimal(output);
@@ -93,20 +127,21 @@ function hexadecimalToDecimal(hexadecimalValue) {
 }
 
 function formatBinary(binaryString) {
-    // Append zeroes if MSB not in full group of 4
-    let lengthMod4 = binaryString.length % 4;
-    if (lengthMod4 !== 0) {
-        binaryString = "0".repeat(4 - lengthMod4) + binaryString;
+    // Append zeroes if MSB not in full group
+    let numbersInMSBGroup = binaryString.length % 8;
+    if (numbersInMSBGroup !== 0) {
+        binaryString = "0".repeat(8 - numbersInMSBGroup) + binaryString;
     }
 
+    // Force 8 digits
     if (binaryString.length === 4) {
         binaryString = "0000" + binaryString;
     }
     
     // Add spacing between each group of 4 bits
     let output = "";
-    for (let i = 0; i < binaryString.length; i += 4) {
-        output += binaryString.substr(i, 4) + " ";
+    for (let i = 0; i < binaryString.length; i += 8) {
+        output += binaryString.substr(i, 8) + " ";
     }
     
     return output.trim();
@@ -116,17 +151,19 @@ function formatHexadecimal(hexadecimalString) {
     if (hexadecimalString.length === 1) {
         hexadecimalString = "0" + hexadecimalString;
     }
+    else if (hexadecimalString.length === 4) {
+        return hexadecimalString.toUpperCase();
+    }
 
     return "0x" + hexadecimalString.toUpperCase();
 }
 
 function formatDecimal(decimalString) {
-    return decimalString; // Maybe do some spaces here later, idk
+    return decimalString;
 }
 
 function convertNumberStringsToDecimal(numberBase, numberStrings) {
     let sanetizedStrings = sanetizeNumberStrings(numberBase, numberStrings);
-
     switch(numberBase) { 
         case 2:  return sanetizedStrings.map(binaryToDecimal);
         case 16: return sanetizedStrings.map(hexadecimalToDecimal);
@@ -138,14 +175,14 @@ function convertNumberStringsToDecimal(numberBase, numberStrings) {
 
 function sanetizeNumberStrings(numberBase, numberStrings) {
     switch(numberBase) {
-        case 2:  return numberStrings.map(formatBinary);
+        case 2:  return numberStrings.map((numStr) => formatBinary(numStr, 8));
         case 16: return numberStrings.map(formatHexadecimal);
         case 10: return numberStrings.map(formatDecimal);
     }
 }
 
-function applyOffset(decimalNumbers) {
-    return decimalNumbers.map(num => num + currentOffsetDecimal);
+function applyOffset(decimalNumbers, offsetDecimal) {
+    return decimalNumbers.map(num => num + offsetDecimal);
 }
 
 function clearInputOutput() {
@@ -178,38 +215,45 @@ function updateOffsetValue(numberString, numberStringBase, newBase) {
     offsetNumberInput.value = numberStringNewBase;
     
     currentOffsetDecimal = number;
+
+    if (numberString !== null && numberString !== "") {
+        if (isEncoding) {
+            outputField.value = encode(currentBase, encodeInput.value.trim(), currentOffsetDecimal);
+        } else if (decodeInput.value.trim() !== "") { 
+            outputField.value = decode(currentBase, decodeInput.value.trim().split(" "), currentOffsetDecimal);
+        }
+    }
+
+    setPlaceholderText(isEncoding, currentBase);
 }
 
-function encode(numberBase, strToEncode) {
+function encode(numberBase, strToEncode, offsetDecimal) {
+    if (strToEncode === "") { return ""; }
+
     let characters = strToEncode.split("");
     let decimalNumbers = characters.map((char) => char.charCodeAt());
-    decimalNumbers = applyOffset(decimalNumbers);
+    decimalNumbers = applyOffset(decimalNumbers, offsetDecimal);
 
     let numberStrings = decimalNumbers.map((num) => decimalToStringWithNewBase(num, numberBase));
-    let output = numberStrings.join(" ");
-    outputField.value = output;
+    return numberStrings.join(" ");
 }
 
-function decode(numberBase, numberStrings) {
+function decode(numberBase, numberStrings, offsetDecimal) {
     let decimalNumbers = convertNumberStringsToDecimal(numberBase, numberStrings);
-    decimalNumbers = applyOffset(decimalNumbers);
+    decimalNumbers = applyOffset(decimalNumbers, offsetDecimal);
 
     let output = String.fromCharCode(...decimalNumbers);
-    console.log(output);
 
-    // This validation should probably be done before the math stuff
-    if (output.split("\u0000").join("") === "") {
+    if (output.split("\u0000").join("") === "" && decodeInput.value !== "") {
         output = "Invalid input. Please add spaces between characters and make sure you are using the right numeral system.";
     }
 
-    outputField.value = output;
+    return output;
 }
 
 function setDefaultSettings() {
-    setIsEncoding(true);
     setBase(2);
-    updateOffsetValue(0, 10, currentBase);
-    clearInputOutput();
+    setIsEncoding(true);
 }
 
 encodeButton.onclick = () => setIsEncoding(true);
@@ -222,7 +266,7 @@ decimalButton    .onclick = () => setBase(10);
 offsetRangeInput .oninput  = () => updateOffsetValue(offsetRangeInput.value, 10, currentBase);
 offsetNumberInput.onchange = () => updateOffsetValue(offsetNumberInput.value, currentBase, currentBase);
 
-encodeInput.oninput = () => { encode(currentBase, encodeInput.value.trim());  }
-decodeInput.oninput = () => { decode(currentBase, decodeInput.value.trim().split(" ")); }
+encodeInput.oninput = () => { outputField.value = encode(currentBase, encodeInput.value.trim(), currentOffsetDecimal);  }
+decodeInput.oninput = () => { outputField.value = decode(currentBase, decodeInput.value.trim().split(" "), currentOffsetDecimal); }
 
 setDefaultSettings();

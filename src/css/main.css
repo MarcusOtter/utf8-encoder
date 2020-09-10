@@ -95,6 +95,10 @@ main .button:focus {
     text-align: right;
 }
 
+.input-output-box textarea {
+    height: auto;
+}
+
 @media only screen and (max-width: 1000px) {
     .input-output-box {
         flex-direction: column;
