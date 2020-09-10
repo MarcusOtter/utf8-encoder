@@ -18,8 +18,8 @@
         <header>
             <h1>UTF-8 encoder/decoder</h1>
             <p>
-                Encode UTF-8 characters into binary, hexadecimal, or decimal numbers with an optional 8-bit signed integer offset.
-                You can also decode an encoded message into UTF-8 characters, with an optional 8-bit signed integer offset.
+                Encode UTF-8 characters into binary, hexadecimal, or decimal numbers with an optional signed byte offset.
+                You can also decode an encoded message into UTF-8 characters, with an optional signed byte offset.
             </p>
             <p>
                 Source code on
@@ -46,15 +46,15 @@
         <div class="input-output-box">
             <section class="input" id="js-encode-section">
                 <h2>Encode</h2>
-                <textarea placeholder="My secret UTF-8 characters..." id="encode-input"></textarea>
+                <textarea id="js-encode-input" placeholder="My secret UTF-8 characters..."></textarea>
             </section>
             <section class="input" id="js-decode-section" hidden>
                 <h2>Decode</h2>
-                <textarea placeholder="0001 1101 0001 1110" id="encode-input"></textarea>
+                <textarea id="js-decode-input" placeholder="0001 1101 0001 1110"></textarea>
             </section>
             <section class="output">
                 <h2>Output</h2>
-                <textarea readonly></textarea>
+                <textarea id="js-output" readonly></textarea>
             </section>
         </div>
     </main>
